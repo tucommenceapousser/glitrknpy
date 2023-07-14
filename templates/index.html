@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>GLIT - OSINT Git by Trhacknon</title>
+    <style>
+        body {
+            background-color: #f7f7f7;
+            color: #333333;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 30px;
+            text-align: center;
+            margin: 40px 0;
+            color: #ff99cc;
+        }
+
+        p {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #ff99cc;
+        }
+
+        input[type="text"],
+        input[type="url"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #cccccc;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #ff99cc;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .results {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .results h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #ff99cc;
+        }
+
+        .results ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .results li {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #cccccc;
+        }
+
+        .results strong {
+            color: #ff99cc;
+        }
+
+        .repository {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 10px;
+        }
+
+        .emails {
+            color: #666666;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>GLIT - OSINT Git by Trhacknon</h1>
+
+    <p>Enter the GitHub URL in the format: <strong>https://api.github.com/users/username</strong></p>
+
+    <form method="POST" action="/">
+        <label for="user_url">GitHub URL:</label>
+        <input type="url" name="user_url" id="user_url" placeholder="Enter the GitHub URL" required>
+
+        <label for="all_branches">Get all branches:</label>
+        <input type="checkbox" name="all_branches" id="all_branches">
+
+        <label for="save_to_file">Save results to file:</label>
+        <input type="checkbox" name="save_to_file" id="save_to_file">
+        <input type="text" name="output_file" id="output_file" placeholder="Enter the output file path">
+
+        <input type="submit" value="Search">
+    </form>
+
+    {% if success %}
+        <div class="results">
+            <h2>Results:</h2>
+            <ul>
+                {% for result in results %}
+                    <li>
+                        <div class="repository">{{ result.repository }}</div>
+                        <div class="emails">
+                            <strong>Emails:</strong> {{ result.emails|join(", ") }}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</body>
+</html>
